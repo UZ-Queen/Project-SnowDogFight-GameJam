@@ -10,6 +10,7 @@ public class SnowBall : MonoBehaviour
     [SerializeField] private float moveSpeed = 0.5f;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float growRate = 0.005f;
+    [SerializeField] Person person;
 
     Rigidbody2D rigid;
     private bool isGround;
@@ -25,8 +26,6 @@ public class SnowBall : MonoBehaviour
         if (isGround)
             Grow();
     }
-
-
 
     void Move()
     {
