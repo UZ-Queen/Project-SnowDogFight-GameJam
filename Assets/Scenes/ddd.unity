@@ -413,6 +413,7 @@ MonoBehaviour:
   moveSpeed: 0.5
   maxSpeed: 10
   growRate: 0.005
+  person: {fileID: 1128579578}
 --- !u!58 &319772044
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -712,7 +713,7 @@ MonoBehaviour:
   tiltPoint: {fileID: 1425090024}
   snowballPosition: {fileID: 319772047}
   snowBall: {fileID: 319772043}
-  tiltSpeed: 0.3
+  tiltSpeed: 40
 --- !u!212 &1128579579
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -773,12 +774,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1128579577}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1476249903}
+  m_Children: []
   m_Father: {fileID: 1425090024}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1425090023
@@ -791,7 +791,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1425090024}
   m_Layer: 0
-  m_Name: GameObject
+  m_Name: test
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -806,44 +806,13 @@ Transform:
   m_GameObject: {fileID: 1425090023}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: -0.0061085457, w: 0.99998134}
-  m_LocalPosition: {x: 1.72, y: 0.81, z: 0}
+  m_LocalPosition: {x: -3.98, y: 4.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1128579580}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.7}
---- !u!1 &1476249902
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1476249903}
-  m_Layer: 0
-  m_Name: TiltPoint
-  m_TagString: Untagged
-  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1476249903
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1476249902}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.07999998, y: -0.99, z: -0.014912674}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1128579580}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

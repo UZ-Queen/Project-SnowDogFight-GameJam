@@ -29,9 +29,10 @@ public class Person : MonoBehaviour
     {
 
         tiltPoint.position = new Vector3(
-            snowballPosition.position.x,
-            snowballPosition.position.y + snowBall.transform.localScale.x / 2,
+            snowballPosition.position.x + (snowBall.transform.localScale.x / 2) * Mathf.Cos((transform.parent.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad),
+            snowballPosition.position.y + (snowBall.transform.localScale.x / 2) * Mathf.Sin((transform.parent.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad),
             transform.position.z);
+ 
     }
 
 
@@ -40,12 +41,12 @@ public class Person : MonoBehaviour
     { 
         if (Input.GetKey(KeyCode.Q))
         {
-            tiltPoint.RotateAround(tiltPoint.position, Vector3.forward, tiltSpeed);
+            tiltPoint.RotateAround(tiltPoint.position, Vector3.forward, tiltSpeed * Time.deltaTime);
         }
 
         if (Input.GetKey(KeyCode.E))
         {
-            tiltPoint.RotateAround(tiltPoint.position, Vector3.forward, -tiltSpeed);
+            tiltPoint.RotateAround(tiltPoint.position, Vector3.forward, -tiltSpeed * Time.deltaTime);
         }
     }
 }
