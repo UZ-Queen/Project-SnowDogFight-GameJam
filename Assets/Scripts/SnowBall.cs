@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+// using System.Numerics;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -12,28 +13,56 @@ public class SnowBall : MonoBehaviour
     [SerializeField] private float growRate = 0.005f;
     [SerializeField] Person person;
 
+    [SerializeField] private bool isControllable = true;
+
+    public void SetControllablity(bool state){
+        isControllable = state;
+    }
+    public void SetControllablity(){
+        isControllable^=true;
+    }
+
+    Vector2 force = Vector2.zero;
     Rigidbody2D rigid;
     private bool isGround;
+
+
+
+
+    public void SetForce(float horizontal)
+    {
+        force = Vector2.right * horizontal * moveSpeed;
+        Debug.Log(force);
+    }
+
+
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        FindObjectOfType<Slope>().OnJumpEnds += SetControllablity;
+
     }
 
     void FixedUpdate()
     {
-        Move();
+        if(isControllable)
+            Move();
+        ClampVelocity();
         if (isGround)
             Grow();
     }
 
     void Move()
     {
-        float h = Input.GetAxisRaw("Horizontal");
+        SetForce(InputManager.Horizontal);
+        rigid.AddForce(force, ForceMode2D.Force);
+        
+        
+    }
 
-        rigid.AddForce(Vector2.right * h * moveSpeed, ForceMode2D.Impulse);
-
-
+    void ClampVelocity()
+    {
         if (rigid.velocity.x > maxSpeed)
             rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
 
@@ -44,7 +73,7 @@ public class SnowBall : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag(TagManager.Ground))
         {
             isGround = true;
         }
@@ -52,7 +81,7 @@ public class SnowBall : MonoBehaviour
 
     void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag(TagManager.Ground))
         {
             isGround = false;
         }
