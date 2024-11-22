@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class SnowBall : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 0.5f;
