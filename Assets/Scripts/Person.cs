@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class Person : MonoBehaviour
 {
+    [SerializeField] private Transform tiltPoint;
     [SerializeField] private Transform snowballPosition;
     [SerializeField] private SnowBall snowBall;
+    [SerializeField] private float tiltSpeed;
 
-
-    private float offset = 0.8f;
     private bool isRide;
 
     void Update()
@@ -19,14 +19,33 @@ public class Person : MonoBehaviour
             isRide = true;
         }
         if (isRide)
+        {
             Ride();
+        }
+        Tilt();
     }
 
     void Ride()
     {
-        transform.position = new Vector3(
+
+        tiltPoint.position = new Vector3(
             snowballPosition.position.x,
-            snowballPosition.position.y + snowBall.transform.localScale.x / 2 + offset,
+            snowballPosition.position.y + snowBall.transform.localScale.x / 2,
             transform.position.z);
+    }
+
+
+    // 기울이기
+    void Tilt()
+    { 
+        if (Input.GetKey(KeyCode.Q))
+        {
+            tiltPoint.RotateAround(tiltPoint.position, Vector3.forward, tiltSpeed);
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            tiltPoint.RotateAround(tiltPoint.position, Vector3.forward, -tiltSpeed);
+        }
     }
 }
