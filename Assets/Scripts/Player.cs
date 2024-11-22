@@ -9,11 +9,13 @@ using UnityEngine;
 [RequireComponent(typeof(SnowBall))]
 public class Player : MonoBehaviour
 {
-
+    SnowBall snowBall;
+    Person person;
 
 
     private void Awake() {
-
+        snowBall = gameObject.GetComponentInChildren<SnowBall>();
+        person = GetComponentInChildren<Person>();
     }
 
     void Start()
@@ -22,6 +24,10 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
+        snowBall.SetForce(InputManager.Horizontal);
+
+
+
         
     }
 }
