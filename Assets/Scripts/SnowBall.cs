@@ -31,7 +31,6 @@ public class SnowBall : MonoBehaviour
     public void SetForce(float horizontal)
     {
         force = Vector2.right * horizontal * moveSpeed;
-        Debug.Log(force);
     }
 
 
@@ -79,6 +78,8 @@ public class SnowBall : MonoBehaviour
             isGround = true;
         }
     }
+
+
 
     void OnCollisionExit2D(Collision2D collision)
     {
