@@ -32,7 +32,7 @@ public class SnowBall : MonoBehaviour
     public void SetForce(float horizontal)
     {
         force = Vector2.right * horizontal * moveSpeed;
-        Debug.Log(force);
+        //Debug.Log(force);
     }
 
 
