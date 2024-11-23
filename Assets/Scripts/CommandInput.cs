@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,7 +13,7 @@ public class CommandGame : MonoBehaviour
 {
     [SerializeField] private Image[] directionImage;
     [SerializeField] private Sprite[] directionSprites;
-    
+    [SerializeField] private Image CommandBackground;
 
     private Stack<Image> imageStack = new Stack<Image>();
     private Stack<Direction> directionStack = new Stack<Direction>();
@@ -55,6 +56,10 @@ public class CommandGame : MonoBehaviour
     {
         directionStack.Pop();
         imageStack.Pop().gameObject.SetActive(false);
+        if (directionStack.Count() == 0)
+        {
+            CommandBackground.gameObject.SetActive(false);
+        }
     }
 
     void IncorrectInput()
