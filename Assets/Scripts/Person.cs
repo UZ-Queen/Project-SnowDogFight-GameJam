@@ -14,7 +14,7 @@ public class Person : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(InputManager.Interaction))
         {
             isRide = true;
         }
@@ -36,7 +36,6 @@ public class Person : MonoBehaviour
     }
 
 
-    // 기울이기
     void Tilt()
     { 
         if (Input.GetKey(KeyCode.Q))
