@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 여기서 
+/// ?�기??
 /// </summary>
 public class Slope : MonoBehaviour
 {
@@ -40,7 +40,7 @@ public class Slope : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other) {
 
-        //좀 더러운데..
+        //좀 ?�러?�데..
         if(other == gettingOnArea){
 
             return;
