@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Damage : MonoBehaviour
 {
+    [SerializeField] Castle castle;
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
-            HpBar.currentHp -= 10f;
+            castle.OnDamaged();
         }
     }
 }

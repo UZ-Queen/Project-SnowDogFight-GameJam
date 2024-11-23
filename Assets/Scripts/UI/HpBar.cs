@@ -6,17 +6,11 @@ using UnityEngine.UI;
 public class HpBar : MonoBehaviour
 {
     [SerializeField] Image hpBar;
+    [SerializeField] Castle castle;
 
-    public float maxHp = 100f;
-    public static float currentHp;
-
-    void Start()
-    {
-        currentHp = maxHp;
-    }
 
     void Update()
     {
-        hpBar.fillAmount = currentHp / maxHp;
+        hpBar.fillAmount = castle.currentHp / castle.maxHp;
     }
 }
