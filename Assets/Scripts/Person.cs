@@ -18,13 +18,18 @@ public class Person : MonoBehaviour
     {
         if (Input.GetKeyDown(InputManager.Interaction))
         {
-            isRide = true;
+            ToggleRiding();
         }
         if (isRide)
         {
             Ride();
             Tilt(); 
         }
+    }
+
+    void ToggleRiding(){
+        transform.position += (Vector3)offset*(isRide ? -1 : 1);
+        isRide ^= true;
     }
 
     void Ride()

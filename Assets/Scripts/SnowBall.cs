@@ -71,6 +71,10 @@ public class SnowBall : MonoBehaviour
             rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
     }
 
+    public void Boost(){
+        
+    }
+
     void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag(TagManager.Ground))

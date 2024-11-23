@@ -20,16 +20,13 @@ public class Slope : MonoBehaviour
 
     public bool isControllable;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+
+    public void AddSnowSize(float size){
+        snowSizeBonus+= size;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        player.MovePosition(player.position + Vector2.right * slopeMoveSpeed*Time.deltaTime);
+    public void AddSnowSpeed(float speedAmount){
+        snowSpeedBonus += speedAmount;
     }
 
 
