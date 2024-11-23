@@ -12,14 +12,14 @@ public class Person : MonoBehaviour
     [SerializeField] private float tiltSpeed;
 
     [SerializeField] private Vector2 offset = Vector2.up;
-    private bool isRide;
+    private bool isRide = false;
 
     void Update()
     {
-        if (Input.GetKeyDown(InputManager.Interaction))
-        {
-            ToggleRiding();
-        }
+        // if (Input.GetKeyDown(InputManager.Interaction))
+        // {
+        //     ToggleRiding();
+        // }
         if (isRide)
         {
             Ride();

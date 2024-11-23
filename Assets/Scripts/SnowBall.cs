@@ -9,13 +9,12 @@ using UnityEngine.SocialPlatforms;
 [RequireComponent(typeof(Rigidbody2D))]
 public class SnowBall : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 0.5f;
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float growRate = 0.005f;
 
     [SerializeField] private bool isControllable = true;
 
-    // [SerializeField] private Transform ;
+    [SerializeField] private Person person;
 
     // public void SetControllablity(bool state){
     //     isControllable = state;
@@ -24,27 +23,74 @@ public class SnowBall : MonoBehaviour
     //     isControllable^=true;
     // }
 
-    Vector2 force = Vector2.zero;
+    public bool autoScroll{get;set;} = false;
+
+
+    [SerializeField] private float moveSpeed = 0.5f;
+    [SerializeField] private bool isLeftSide = true;
+
+    Vector2 Direction{get{
+        return isLeftSide ? Vector2.right : Vector2.left;
+    }}
+
+
     Rigidbody2D rb;
     private bool isGround;
+    private bool doSnowballGrow;
 
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        person = GetComponent<Person>();
     }
     private void Start() {
         rb.isKinematic = true;
         isControllable = false;
+        doSnowballGrow=false;
+    }
+    void Update(){
+        if(Input.GetKeyDown(KeyCode.RightBracket)){ AdjustSpeed(400,1);}
+        if(Input.GetKeyDown(KeyCode.Return)) {
+            transform.position = new Vector3(-10, 5, 0);
+             rb.velocity = Vector2.zero;
+        }
+        if(Input.GetKeyDown(KeyCode.DownArrow)) rb.gravityScale = 10f;
+        if(Input.GetKeyDown(KeyCode.UpArrow)) rb.gravityScale = 1f;
+        if (isGround || doSnowballGrow)
+            Grow();
+    }
+    void FixedUpdate()
+    {
+        // if(isControllable)
+        //     Move();
+        ClampVelocity();
+        if(autoScroll) Move();
     }
 
-    public void SetForce(float horizontal)
-    {
-        force = Vector2.right * horizontal * moveSpeed;
+    public void ForciblyMove(bool isLeft){
+        rb.isKinematic ^= true;
+        isLeftSide = isLeft;
+        autoScroll ^=true;
     }
-    public void AjdustVelocity(float velocity){
-        moveSpeed += velocity;
-        
+
+    //작은 단위로 조정하세요!
+    public void AdjustSpeed(float speed, float duration)
+    {
+        // moveSpeed += speed;
+        StartCoroutine(AdjustSpeedSmoothly(speed, duration));
+    }
+
+    IEnumerator AdjustSpeedSmoothly(float amount, float duration){
+        float percent = 0;
+        float speed = 1/duration;
+        float originalValue = moveSpeed;
+        while(percent <= 1){
+
+            percent+= speed*Time.deltaTime;
+            moveSpeed = Mathf.Lerp(originalValue, originalValue+amount, percent);
+            yield return null;
+        }
     }
 
     public void EnableAirControl(){
@@ -52,26 +98,11 @@ public class SnowBall : MonoBehaviour
         rb.isKinematic = false;
     }
 
-
-
-    void FixedUpdate()
-    {
-        if(isControllable)
-            Move();
-        ClampVelocity();
-    }
-
-    void Update(){
-        if (isGround)
-            Grow();
-    }
-
-
     void Move()
     {
-        SetForce(InputManager.Horizontal);
-        rb.AddForce(force, ForceMode2D.Force);
+        rb.AddForce(moveSpeed * Direction * 0.02f, ForceMode2D.Impulse);
     }
+
 
     void ClampVelocity()
     {
@@ -104,5 +135,13 @@ public class SnowBall : MonoBehaviour
     void Grow()
     {
         transform.localScale += Vector3.one * growRate * Time.deltaTime;
+    }
+
+    //코루틴이나 린트윈으로 점진적으로 늘리자.
+    public void GrowImmidiate(float amount){
+        transform.localScale += Vector3.one * amount;
+    }
+    public void SetVelocity(Vector2 velocity){
+        rb.velocity = velocity;
     }
 }
