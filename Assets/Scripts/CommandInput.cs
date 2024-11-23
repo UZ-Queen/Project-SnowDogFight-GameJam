@@ -22,78 +22,129 @@ public class CommandGame : MonoBehaviour
     private Queue<GameObject> commandQueue = new Queue<GameObject>();
     private Queue<Direction> directionQueue = new Queue<Direction>();
 
-    private int stage = 3;
-    void Start()
-    {
-        GenerateDirection(stage);
-    }
+
+    private Direction[] Jump = { Direction.Up, Direction.Up };
+    private Direction[] HandStand = { Direction.Up, Direction.Down, Direction.Up, Direction.Down };
+    private Direction[] Tumble = { Direction.Up, Direction.Up, Direction.Left, Direction.Up, Direction.Right, Direction.Down };
+
+    private int i = 1;
+
+    private Coroutine resetCoroutine;
 
     void Update()
     {
         if (Input.anyKeyDown)
         {
-            if ((Input.GetKeyDown(KeyCode.UpArrow) && directionQueue.Peek() == Direction.Up) ||
-                (Input.GetKeyDown(KeyCode.DownArrow) && directionQueue.Peek() == Direction.Down) ||
-                (Input.GetKeyDown(KeyCode.LeftArrow) && directionQueue.Peek() == Direction.Left) ||
-                (Input.GetKeyDown(KeyCode.RightArrow) && directionQueue.Peek() == Direction.Right))
-            {
-                CorrectInput();
-            }
-            else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) ||
-                Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.RightArrow))
-                IncorrectInput();
+            if (resetCoroutine != null)
+                StopCoroutine(resetCoroutine);
+
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+                GenerateDirection(Direction.Up);
+
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+                GenerateDirection(Direction.Down);
+
+            else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                GenerateDirection(Direction.Left);
+
+            else if (Input.GetKeyDown(KeyCode.RightArrow))
+                GenerateDirection(Direction.Right);
+
+            resetCoroutine = StartCoroutine(CheckPerformance(0.5f));
         }
     }
 
-    void GenerateDirection(int stage)
+    void GenerateDirection(Direction direction)
     {
-        while (commandQueue.Count() > 0)
+        int index = (int)direction;
+
+        GameObject newCommand = Instantiate(command, canvas.transform);
+        Image newCommandImage = newCommand.GetComponent<Image>();
+        RectTransform newCommandRectTransform = newCommand.GetComponent<RectTransform>();
+        RectTransform frontTransform = front.GetComponent<RectTransform>();
+        RectTransform backTransform = back.GetComponent<RectTransform>();
+
+        float xPos = backTransform.anchoredPosition.x - frontTransform.anchoredPosition.x;
+
+
+        newCommandRectTransform.anchoredPosition = new Vector2(frontTransform.anchoredPosition.x
+            + 50 * i + 40, -105);
+        newCommandImage.sprite = directionSprites[index];
+        directionQueue.Enqueue(direction);
+        commandQueue.Enqueue(newCommand);
+        i++;
+    }
+
+    IEnumerator CheckPerformance(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+        if (commandQueue.Count() == 2)
+            JumpPerformance();
+
+        else if (commandQueue.Count() == 4)
+            HandStandPerformance();
+
+        else if (commandQueue.Count() == 6)
+            TumblePerformance();
+
+        else
+            ClearQueue();
+    }
+
+    void JumpPerformance()
+    {
+        int succeed = 0;
+        for (int i = 0; i < 2; i++)
         {
+            if (directionQueue.Dequeue() == Jump[i])
+                succeed++;
+        }
+        if (succeed == 2)
+        {
+            // 점프 성공
+            Debug.Log("점프");
+        }
+        ClearQueue();
+    }
+
+    void HandStandPerformance()
+    {
+        int succeed = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            if (directionQueue.Dequeue() == HandStand[i])
+                succeed++;
+        }
+        if (succeed == 4)
+        {
+            // 물구나무
+            Debug.Log("물구나무");
+
+        }
+        ClearQueue();
+    }
+    void TumblePerformance()
+    {
+        int succeed = 0;
+        for (int i = 0; i < 6; i++)
+        {
+            if (directionQueue.Dequeue() == Tumble[i])
+                succeed++;
+        }
+        if (succeed == 6)
+        {
+            // 공중제비
+            Debug.Log("공중제비");
+        }
+        ClearQueue();
+    }
+    void ClearQueue()
+    {
+        i = 0;
+        while (commandQueue.Count > 0)
             Destroy(commandQueue.Dequeue());
+        while (directionQueue.Count > 0)
             directionQueue.Dequeue();
-        }
-
-        for (int i = 0; i < stage; i++)
-        {
-            Direction currentDirection;
-            currentDirection = (Direction)Random.Range(0, 4);
-            int index = (int)currentDirection;
-
-            GameObject newCommand = Instantiate(command, canvas.transform);
-            Image newCommandImage = newCommand.GetComponent<Image>();
-            RectTransform newCommandRectTransform = newCommand.GetComponent<RectTransform>();
-            RectTransform frontTransform = front.GetComponent<RectTransform>();
-            RectTransform backTransform = back.GetComponent<RectTransform>();
-
-
-            float xPos = backTransform.anchoredPosition.x - frontTransform.anchoredPosition.x;
-
-            Debug.Log(xPos);
-
-            newCommandRectTransform.anchoredPosition = new Vector2(frontTransform.anchoredPosition.x +
-                xPos / stage * (i + 1) - 20, -105);
-            newCommandImage.sprite = directionSprites[index];
-            directionQueue.Enqueue(currentDirection);
-            commandQueue.Enqueue(newCommand);
-        }
-    }
-
-    void CorrectInput()
-    {
-        Debug.Log("정답");
-        directionQueue.Dequeue();
-        Destroy(commandQueue.Dequeue());
-
-        if (directionQueue.Count() == 0)
-        {
-            stage += 2;
-            GenerateDirection(stage);
-        }
-    }
-
-    void IncorrectInput()
-    {
-        Debug.Log("오답");
-        GenerateDirection(stage);
     }
 }
