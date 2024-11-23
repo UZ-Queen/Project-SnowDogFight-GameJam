@@ -1,6 +1,7 @@
 using JetBrains.Rider.Unity.Editor;
 using System.Collections;
 using System.Collections.Generic;
+// using System.Numerics;
 using UnityEngine;
 
 public class Person : MonoBehaviour
@@ -10,6 +11,7 @@ public class Person : MonoBehaviour
     [SerializeField] private SnowBall snowBall;
     [SerializeField] private float tiltSpeed;
 
+    [SerializeField] private Vector2 offset = Vector2.up;
     private bool isRide;
 
     void Update()
@@ -21,8 +23,8 @@ public class Person : MonoBehaviour
         if (isRide)
         {
             Ride();
+            Tilt(); 
         }
-        Tilt();
     }
 
     void Ride()
