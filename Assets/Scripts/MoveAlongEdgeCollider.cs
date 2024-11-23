@@ -9,7 +9,6 @@ public class MoveAlongEdgeCollider : MonoBehaviour
     Vector2[] points;
     int currentIndex;
     public float speed = 5f;
-
     public Vector2 offset = Vector2.up;
 
     private void Awake()
@@ -64,6 +63,12 @@ public class MoveAlongEdgeCollider : MonoBehaviour
         if(Vector2.SqrMagnitude(-(Vector2)transform.position + points[currentIndex+1]) < 0.1f){
             currentIndex++;
         }
+    }
+
+
+
+    public void AdjustSpeed(float amount){
+        speed+= amount;
     }
 
 }

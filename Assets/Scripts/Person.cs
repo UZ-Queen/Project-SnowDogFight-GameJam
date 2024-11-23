@@ -27,7 +27,7 @@ public class Person : MonoBehaviour
         }
     }
 
-    void ToggleRiding(){
+    public void ToggleRiding(){
         transform.position += (Vector3)offset*(isRide ? -1 : 1);
         isRide ^= true;
     }

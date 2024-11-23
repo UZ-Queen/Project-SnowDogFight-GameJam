@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class SnowBall : MonoBehaviour
@@ -14,65 +15,72 @@ public class SnowBall : MonoBehaviour
 
     [SerializeField] private bool isControllable = true;
 
-    public void SetControllablity(bool state){
-        isControllable = state;
-    }
-    public void SetControllablity(){
-        isControllable^=true;
-    }
+    // [SerializeField] private Transform ;
+
+    // public void SetControllablity(bool state){
+    //     isControllable = state;
+    // }
+    // public void SetControllablity(){
+    //     isControllable^=true;
+    // }
 
     Vector2 force = Vector2.zero;
-    Rigidbody2D rigid;
+    Rigidbody2D rb;
     private bool isGround;
 
 
-
+    void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+    private void Start() {
+        rb.isKinematic = true;
+        isControllable = false;
+    }
 
     public void SetForce(float horizontal)
     {
         force = Vector2.right * horizontal * moveSpeed;
     }
-
-
-
-    void Awake()
-    {
-        rigid = GetComponent<Rigidbody2D>();
-        FindObjectOfType<Slope>().OnJumpEnds += SetControllablity;
-
+    public void AjdustVelocity(float velocity){
+        moveSpeed += velocity;
+        
     }
+
+    public void EnableAirControl(){
+        isControllable = true;
+        rb.isKinematic = false;
+    }
+
+
 
     void FixedUpdate()
     {
         if(isControllable)
             Move();
         ClampVelocity();
+    }
+
+    void Update(){
         if (isGround)
             Grow();
     }
 
 
-
     void Move()
     {
         SetForce(InputManager.Horizontal);
-        rigid.AddForce(force, ForceMode2D.Force);
-        
-        
+        rb.AddForce(force, ForceMode2D.Force);
     }
 
     void ClampVelocity()
     {
-        if (rigid.velocity.x > maxSpeed)
-            rigid.velocity = new Vector2(maxSpeed, rigid.velocity.y);
+        if (rb.velocity.x > maxSpeed)
+            rb.velocity = new Vector2(maxSpeed, rb.velocity.y);
 
 
-        else if (rigid.velocity.x < maxSpeed * (-1))
-            rigid.velocity = new Vector2(maxSpeed * (-1), rigid.velocity.y);
-    }
-
-    public void Boost(){
-        
+        else if (rb.velocity.x < maxSpeed * (-1))
+            rb.velocity = new Vector2(maxSpeed * (-1), rb.velocity.y);
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -95,6 +103,6 @@ public class SnowBall : MonoBehaviour
 
     void Grow()
     {
-        transform.localScale += Vector3.one * rigid.velocity.magnitude * growRate;
+        transform.localScale += Vector3.one * growRate * Time.deltaTime;
     }
 }

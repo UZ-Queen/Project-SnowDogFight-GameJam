@@ -71,6 +71,7 @@ public class TimingBoostArea : MonoBehaviour
         float boostValue = Mathf.Lerp(maxBoostValue, 0, value/(transform.position.x/2) );
         Debug.Log($"부스트 완벽도는? {value/(transform.position.x/2)}(0일수록 완벽합니다!)");
         // OnBoostComplete(boostValue);
+        //인터페이스.......
         boostableObj.GetComponent<SnowBall>();
     }
 
