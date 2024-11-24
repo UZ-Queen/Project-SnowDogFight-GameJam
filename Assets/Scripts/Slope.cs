@@ -41,7 +41,7 @@ public class Slope : MonoBehaviour
     }
 
     void StartRunning(){
-        Debug.Log("움직이기를 시작해.");
+        Debug.Log("?�직이기�? ?�작??");
         hasStartedRunning = true;
         // mover.enabled = true;
         snowBall.ForciblyMove(isLeftSide);
@@ -51,7 +51,7 @@ public class Slope : MonoBehaviour
     void OnPlayerGetOnSnow(float boostPercent){
         float snowSpeedBonus = BoostPercentBonus(boostPercent)*maxBoostAmount;
 
-        Debug.Log($"{snowSpeedBonus}만큼 속도를 늘릴게요!");
+        Debug.Log($"{snowSpeedBonus}만큼 ?�도�??�릴게요!");
         
         // snowBall.EnableAirControl();
         person.GetComponentInParent<FriendsTillTheEnd>().enabled= false;
@@ -67,8 +67,8 @@ public class Slope : MonoBehaviour
 
         float snowSizeBonus = BoostPercentBonus(boostPercent) / 25 * maxBoostAmount;
         float snowSpeedBonus = BoostPercentBonus(boostPercent) / 3 *maxBoostAmount;
-        Debug.Log($"{snowSpeedBonus}만큼 속도를 늘릴게요!");
-        Debug.Log($"{snowSizeBonus}만큼 크기를 늘릴게요!");
+        Debug.Log($"{snowSpeedBonus}만큼 ?�도�??�릴게요!");
+        Debug.Log($"{snowSizeBonus}만큼 ?�기�??�릴게요!");
 
 
         // snowBall.EnableAirControl();

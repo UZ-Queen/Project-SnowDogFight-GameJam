@@ -16,11 +16,11 @@ public class Castle : MonoBehaviour
         currentHp -= 10f;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag(TagManager.SnowBall))
-        {
-            OnDamaged();
-        }
-    }
+    //void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag(TagManager.SnowBall))
+    //    {
+    //        OnDamaged();
+    //    }
+    //}
 }

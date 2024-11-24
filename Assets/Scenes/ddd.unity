@@ -1550,7 +1550,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLeftSide: 1
-  mover: {fileID: 1418452316}
+  mover: {fileID: 0}
   person: {fileID: 1019504564}
   snowBall: {fileID: 239742763}
   gettingOnArea: {fileID: 781840265}

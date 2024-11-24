@@ -24,7 +24,7 @@ public class Player : MonoBehaviour
     }
     void Update()
     {
-        snowBall.SetForce(InputManager.Horizontal);
+        //snowBall.SetForce(InputManager.Horizontal);
 
 
 

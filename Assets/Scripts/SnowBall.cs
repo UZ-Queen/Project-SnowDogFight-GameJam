@@ -15,8 +15,6 @@ public class SnowBall : MonoBehaviour
 
     [SerializeField] private bool isControllable = true;
 
-    [SerializeField] private Person person;
-
     // public void SetControllablity(bool state){
     //     isControllable = state;
     // }
@@ -43,7 +41,6 @@ public class SnowBall : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        person = GetComponent<Person>();
     }
     private void Start() {
         rb.isKinematic = true;
@@ -75,7 +72,7 @@ public class SnowBall : MonoBehaviour
         autoScroll ^=true;
     }
 
-    //작은 단위로 조정하세요!
+    //?��? ?�위�?조정?�세??
     public void AdjustSpeed(float speed, float duration)
     {
         // moveSpeed += speed;
@@ -138,7 +135,7 @@ public class SnowBall : MonoBehaviour
         transform.localScale += Vector3.one * growRate * Time.deltaTime;
     }
 
-    //코루틴이나 린트윈으로 점진적으로 늘리자.
+    //코루?�이??린트?�으�??�진?�으�??�리??
     public void GrowImmidiate(float amount){
         transform.localScale += Vector3.one * amount;
     }
