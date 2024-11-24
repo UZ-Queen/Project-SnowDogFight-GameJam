@@ -1,6 +1,7 @@
 using JetBrains.Rider.Unity.Editor;
 using System.Collections;
 using System.Collections.Generic;
+// using System.Numerics;
 using UnityEngine;
 
 public class Person : MonoBehaviour
@@ -10,19 +11,25 @@ public class Person : MonoBehaviour
     [SerializeField] private SnowBall snowBall;
     [SerializeField] private float tiltSpeed;
 
-    private bool isRide;
+    [SerializeField] private Vector2 offset = Vector2.up;
+    private bool isRide = false;
 
     void Update()
     {
-        if (Input.GetKeyDown(InputManager.Interaction))
-        {
-            isRide = true;
-        }
+        // if (Input.GetKeyDown(InputManager.Interaction))
+        // {
+        //     ToggleRiding();
+        // }
         if (isRide)
         {
             Ride();
+            Tilt(); 
         }
-        Tilt();
+    }
+
+    public void ToggleRiding(){
+        transform.position += (Vector3)offset*(isRide ? -1 : 1);
+        isRide ^= true;
     }
 
     void Ride()
