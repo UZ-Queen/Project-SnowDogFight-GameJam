@@ -6,13 +6,14 @@ using UnityEngine.UI;
 public class Floor : MonoBehaviour
 {
     [SerializeField] GameObject scoreStart;
-    [SerializeField] Canvas canvas;
+    [SerializeField] Canvas canvas1;
+    [SerializeField] Canvas canvas2;
     [SerializeField] Text scoreText;
 
     Transform scoreEnd;
     float distance;
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Snowball"))
         {
@@ -23,9 +24,9 @@ public class Floor : MonoBehaviour
             distance = Vector3.Magnitude(collision.gameObject.transform.position - scoreStart.transform.position);
 
             Debug.Log(collision.gameObject.transform.position.x);
-            canvas.gameObject.SetActive(true);
-            scoreText.text = collision.gameObject.transform.position.x.ToString();
+            canvas1.gameObject.SetActive(true);
+            scoreText.text = distance.ToString();
+            canvas2.gameObject.SetActive(false);
         }
-
     }
 }

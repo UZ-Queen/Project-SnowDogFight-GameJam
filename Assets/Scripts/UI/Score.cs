@@ -16,9 +16,13 @@ public class Score : MonoBehaviour
     {
         Debug.Log("종료");
 
-        UnityEditor.EditorApplication.isPlaying = false;
+        //UnityEditor.EditorApplication.isPlaying = false;
         Application.Quit();
     }
 
-
+    public void GameStartButtonClick()
+    {
+        Debug.Log("게임시작");
+        SceneManager.LoadScene("ddd");
+    }
 }
