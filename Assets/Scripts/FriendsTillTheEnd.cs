@@ -21,7 +21,5 @@ public class FriendsTillTheEnd : MonoBehaviour
 
     public void RecalculatePosition(){
         offset = target.position - transform.position;
-
-
     }
 }

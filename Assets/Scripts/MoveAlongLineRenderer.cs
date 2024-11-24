@@ -11,7 +11,7 @@ public class MoveAlongLineRenderer : MonoBehaviour
 
     private void Awake() {
         if(lr == null){
-            Debug.LogError("라인렌더러를 할당해 주세요.");
+            Debug.LogError("?�인?�더?��? ?�당??주세??");
             gameObject.SetActive(false);
         }    
     }

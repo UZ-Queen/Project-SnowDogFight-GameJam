@@ -51,9 +51,6 @@ public class MoveAlongEdgeCollider : MonoBehaviour
             }
             currentIndex++;
         }
-
-
-        
     }
 
     void MoveAlongLineNotCoroutine(){

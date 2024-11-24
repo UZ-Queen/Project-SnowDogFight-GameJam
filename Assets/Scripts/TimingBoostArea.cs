@@ -40,7 +40,7 @@ public class TimingBoostArea : MonoBehaviour
         if (other.tag == TagManager.Snow)
         {
             isBoostable = true;
-            Debug.Log("이제 부스트 가능해요!");
+            Debug.Log("?�제 부?�트 가?�해??");
             targetCollider = other;
             // startX = other.transform.position.x;
             // startX += other.bounds.size.x/2 * other.transform.position.x < transform.position.x ? 1 : -1;
@@ -80,9 +80,9 @@ public class TimingBoostArea : MonoBehaviour
 
         float value = Mathf.Abs(transform.position.x - xPosition);
         // float boostValue = Mathf.Lerp(maxBoostValue, 0, value / (transform.position.x / 2));
-        Debug.Log($"부스트 완벽도는? {value / (transform.position.x / 2)}(0일수록 완벽합니다!)");
+        Debug.Log($"부?�트 ?�벽?�는? {value / (transform.position.x / 2)}(0?�수�??�벽?�니??)");
         // OnBoostComplete(boostValue);
-        //인터페이스.......
+        //?�터?�이??......
 
     }
 
@@ -92,9 +92,9 @@ public class TimingBoostArea : MonoBehaviour
         targetCollider = null;
         float value = Mathf.Abs(transform.position.x - xPosition);
         float boostPercent = 1 - value / (c.bounds.size.x/ 2);
-        Debug.Log($"부스트 완벽도는? {value / (c.bounds.size.x/ 2)}(0일수록 완벽합니다!)");
+        Debug.Log($"부?�트 ?�벽?�는? {value / (c.bounds.size.x/ 2)}(0?�수�??�벽?�니??)");
         // OnBoostComplete(boostValue);
-        //인터페이스.......
+        //?�터?�이??......
         OnBoostComplete(boostPercent);
         gameObject.SetActive(false);
     }

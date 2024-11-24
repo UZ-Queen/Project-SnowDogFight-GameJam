@@ -5,11 +5,12 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+
     // Start is called before the first frame update
     void Awake()
     {
         if(instance != null){
-            Debug.Log($"{instance.name} : 하늘 아래 두 개의 태양은 있을 수 없는 법..");
+            Debug.Log($"{instance.name} : ?�늘 ?�래 ??개의 ?�양?� ?�을 ???�는 �?.");
             Destroy(gameObject);
         }
         else{
