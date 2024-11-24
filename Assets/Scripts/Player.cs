@@ -4,7 +4,7 @@ using UnityEngine;
 
 
 /// <summary>
-/// 인풋을 받을 듯
+/// ?�풋??받을 ??
 /// </summary>
 [RequireComponent(typeof(SnowBall))]
 public class Player : MonoBehaviour

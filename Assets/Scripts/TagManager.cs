@@ -5,5 +5,5 @@ using UnityEngine;
 public class TagManager
 {
     static public string Ground{get{return "Ground";}}
-
+    static public string SnowBall{get{return "SnowBall";}}
 }
