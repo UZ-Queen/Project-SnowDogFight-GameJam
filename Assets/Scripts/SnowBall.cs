@@ -12,6 +12,7 @@ public class SnowBall : MonoBehaviour
     [SerializeField] private float maxSpeed = 5f;
     [SerializeField] private float growRate = 0.005f;
     [SerializeField] Person person;
+    [SerializeField] Floor gameManager;
 
     [SerializeField] private bool isControllable = true;
 
@@ -37,10 +38,12 @@ public class SnowBall : MonoBehaviour
     private bool isGround;
     private bool doSnowballGrow;
 
+    float originGravity;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        originGravity = rb.gravityScale;
     }
     private void Start() {
         rb.isKinematic = true;
@@ -48,15 +51,33 @@ public class SnowBall : MonoBehaviour
         doSnowballGrow=false;
     }
     void Update(){
-        if(Input.GetKeyDown(KeyCode.RightBracket)){ AdjustSpeed(400,1);}
-        if(Input.GetKeyDown(KeyCode.Return)) {
-            transform.position = new Vector3(-10, 5, 0);
-             rb.velocity = Vector2.zero;
+        //if(Input.GetKeyDown(KeyCode.RightBracket)){ AdjustSpeed(400,1);}
+        //if(Input.GetKeyDown(KeyCode.Return)) {
+        //    transform.position = new Vector3(-10, 5, 0);
+        //     rb.velocity = Vector2.zero;
+        //}
+        //if(Input.GetKeyDown(KeyCode.DownArrow)) rb.gravityScale = 10f;
+        //if(Input.GetKeyDown(KeyCode.UpArrow)) rb.gravityScale = 1f;
+        if (moveSpeed == 0)
+        {
+            this.gameObject.SetActive(false);
+            gameManager.GameOver();
         }
-        if(Input.GetKeyDown(KeyCode.DownArrow)) rb.gravityScale = 10f;
-        if(Input.GetKeyDown(KeyCode.UpArrow)) rb.gravityScale = 1f;
         if (isGround || doSnowballGrow)
             Grow();
+    }
+    public IEnumerator DecreaseGravityScale()
+    {
+        rb.gravityScale = 5f;
+        yield return new WaitForSeconds(0.2f);
+        rb.gravityScale = originGravity;
+    }
+
+    public IEnumerator IncreaseGravityScale()
+    {
+        rb.gravityScale = 10f;
+        yield return null;
+        rb.gravityScale = originGravity;
     }
     void FixedUpdate()
     {
@@ -87,6 +108,8 @@ public class SnowBall : MonoBehaviour
 
             percent+= speed*Time.deltaTime;
             moveSpeed = Mathf.Lerp(originalValue, originalValue+amount, percent);
+            if (moveSpeed < 0)
+                moveSpeed = 0;
             yield return null;
         }
     }

@@ -17,6 +17,9 @@ public class CommandGame : MonoBehaviour
     [SerializeField] private GameObject back;
     [SerializeField] private GameObject command;
     [SerializeField] private Canvas canvas;
+    [SerializeField] private SnowBall snowBall;
+    [SerializeField] private Text succedText;
+    [SerializeField] private Text failText;
 
 
     private Queue<GameObject> commandQueue = new Queue<GameObject>();
@@ -33,7 +36,10 @@ public class CommandGame : MonoBehaviour
 
     void Update()
     {
-        if (Input.anyKeyDown)
+        if (Input.GetKeyDown(KeyCode.UpArrow) ||
+            Input.GetKeyDown(KeyCode.DownArrow) ||
+            Input.GetKeyDown(KeyCode.LeftArrow)||
+            Input.GetKeyDown(KeyCode.RightArrow))
         {
             if (resetCoroutine != null)
                 StopCoroutine(resetCoroutine);
@@ -89,7 +95,7 @@ public class CommandGame : MonoBehaviour
             TumblePerformance();
 
         else
-            ClearQueue();
+            CommandFailure();
     }
 
     void JumpPerformance()
@@ -102,10 +108,19 @@ public class CommandGame : MonoBehaviour
         }
         if (succeed == 2)
         {
+            snowBall.AdjustSpeed(50, 0.5f);
+            StartCoroutine(snowBall.DecreaseGravityScale());
+
+            StartCoroutine(DisplayText(succedText));
+
             // 점프 성공
             Debug.Log("점프");
+            ClearQueue();
         }
-        ClearQueue();
+        else
+        {
+            CommandFailure();
+        }
     }
 
     void HandStandPerformance()
@@ -118,11 +133,20 @@ public class CommandGame : MonoBehaviour
         }
         if (succeed == 4)
         {
+            snowBall.AdjustSpeed(120, 0.5f);
+            StartCoroutine(snowBall.DecreaseGravityScale());
+
+            StartCoroutine(DisplayText(succedText));
+
             // 물구나무
             Debug.Log("물구나무");
-
+            ClearQueue();
         }
-        ClearQueue();
+        else
+        {
+            CommandFailure();
+        }
+        
     }
     void TumblePerformance()
     {
@@ -134,11 +158,31 @@ public class CommandGame : MonoBehaviour
         }
         if (succeed == 6)
         {
+            snowBall.AdjustSpeed(300, 0.5f);
+            StartCoroutine(snowBall.DecreaseGravityScale());
             // 공중제비
+            StartCoroutine(DisplayText(succedText));
             Debug.Log("공중제비");
+            ClearQueue();
         }
+        else
+        {
+            CommandFailure();
+        }
+    }
+
+    void CommandFailure()
+    {
+        // 속도 낮추기
+        snowBall.AdjustSpeed(-130, 0.5f);
+        StartCoroutine(snowBall.IncreaseGravityScale());
+
+        // 실패화면 띄우기
+        StartCoroutine(DisplayText(failText));
+        Debug.Log("실패");
         ClearQueue();
     }
+
     void ClearQueue()
     {
         i = 0;
@@ -146,5 +190,12 @@ public class CommandGame : MonoBehaviour
             Destroy(commandQueue.Dequeue());
         while (directionQueue.Count > 0)
             directionQueue.Dequeue();
+    }
+
+    IEnumerator DisplayText(Text text)
+    {
+        text.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        text.gameObject.SetActive(false);
     }
 }

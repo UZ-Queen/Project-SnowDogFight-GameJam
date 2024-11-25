@@ -22,6 +22,7 @@ public class Slope : MonoBehaviour
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private float slopeMoveSpeed = 5f;
     [SerializeField] private float maxBoostAmount = 20f;
+    [SerializeField] Floor floor;
 
     public float snowSizeBonus = 0f;
     // public float snowSpeedBonus = 0f;
@@ -35,7 +36,7 @@ public class Slope : MonoBehaviour
     }
 
     void Update(){
-        if(!hasStartedRunning && Input.GetKeyDown(KeyCode.RightArrow)){
+        if(!hasStartedRunning && !floor.isPause && Input.GetKeyDown(KeyCode.Space)){
             StartRunning();
         }
     }
