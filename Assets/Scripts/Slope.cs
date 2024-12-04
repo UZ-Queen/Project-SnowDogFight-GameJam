@@ -22,6 +22,7 @@ public class Slope : MonoBehaviour
     [SerializeField] private Rigidbody2D player;
     [SerializeField] private float slopeMoveSpeed = 5f;
     [SerializeField] private float maxBoostAmount = 20f;
+    [SerializeField] private Canvas commandCanvas;
     [SerializeField] Floor floor;
 
     public float snowSizeBonus = 0f;
@@ -46,6 +47,7 @@ public class Slope : MonoBehaviour
         hasStartedRunning = true;
         // mover.enabled = true;
         snowBall.ForciblyMove(isLeftSide);
+        commandCanvas.gameObject.SetActive(true);
     }
 
 

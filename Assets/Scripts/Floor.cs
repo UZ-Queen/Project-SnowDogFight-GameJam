@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Floor : MonoBehaviour
 {
+    public static Floor instance {  get; private set; }
     [SerializeField] GameObject scoreStart;
     [SerializeField] Canvas canvas1;
     [SerializeField] Canvas canvas2;
@@ -19,6 +20,11 @@ public class Floor : MonoBehaviour
 
     void Awake()
     {
+        if (instance == null)
+            instance = this;
+        else if (instance != null)
+            Destroy(instance);
+        DontDestroyOnLoad(gameObject);
         Time.timeScale = 1;
     }
     public void GameOver()

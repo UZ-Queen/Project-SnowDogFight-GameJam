@@ -36,27 +36,30 @@ public class CommandGame : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) ||
-            Input.GetKeyDown(KeyCode.DownArrow) ||
-            Input.GetKeyDown(KeyCode.LeftArrow)||
-            Input.GetKeyDown(KeyCode.RightArrow))
+        if (!Floor.instance.isPause)
         {
-            if (resetCoroutine != null)
-                StopCoroutine(resetCoroutine);
+            if (Input.GetKeyDown(KeyCode.UpArrow) ||
+            Input.GetKeyDown(KeyCode.DownArrow) ||
+            Input.GetKeyDown(KeyCode.LeftArrow) ||
+            Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                if (resetCoroutine != null)
+                    StopCoroutine(resetCoroutine);
 
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-                GenerateDirection(Direction.Up);
+                if (Input.GetKeyDown(KeyCode.UpArrow))
+                    GenerateDirection(Direction.Up);
 
-            else if (Input.GetKeyDown(KeyCode.DownArrow))
-                GenerateDirection(Direction.Down);
+                else if (Input.GetKeyDown(KeyCode.DownArrow))
+                    GenerateDirection(Direction.Down);
 
-            else if (Input.GetKeyDown(KeyCode.LeftArrow))
-                GenerateDirection(Direction.Left);
+                else if (Input.GetKeyDown(KeyCode.LeftArrow))
+                    GenerateDirection(Direction.Left);
 
-            else if (Input.GetKeyDown(KeyCode.RightArrow))
-                GenerateDirection(Direction.Right);
+                else if (Input.GetKeyDown(KeyCode.RightArrow))
+                    GenerateDirection(Direction.Right);
 
-            resetCoroutine = StartCoroutine(CheckPerformance(0.5f));
+                resetCoroutine = StartCoroutine(CheckPerformance(0.5f));
+            }
         }
     }
 
